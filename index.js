@@ -10,26 +10,29 @@ app.get('/testing', function(req, res){ // listens for request on /api route
  res.send('working!'); // if no errors, send the body of data back to front end
 });
 
-app.get('/v1/schools', function(req, res){
+app.get('/v1/schools/:degree/:major', function(req, res){
   // var url = 'https://api.data.gov/ed/collegescorecard/v1/schools/?sort=2012.earnings.6_yrs_after_entry.percent_greater_than_25000%3Adesc&school.operating=1&2014.student.size__range=0..&2014.academics.program_available.bachelors=true&2014.academics.program.degree.education__range=1..&school.degrees_awarded.predominant__range=1..3&school.degrees_awarded.highest__range=2..4&fields=id%2Cschool.name%2Cschool.city%2Cschool.state%2C2014.student.size%2Cschool.ownership%2Cschool.degrees_awarded.predominant%2C2014.cost.avg_net_price.overall%2C2014.completion.rate_suppressed.overall%2C2012.earnings.10_yrs_after_entry.median%2C2012.earnings.6_yrs_after_entry.percent_greater_than_25000%2Cschool.under_investigation&api_key=38SEXdMNbMh1eIXMVNkThsu7zRgEPCdJ4eiRWAAU'
-  // var degreeRange =
+  var degree = req.params.degree;
+  var major = req.params.major;
+
   var url = 'https://api.data.gov/ed/collegescorecard/v1/schools/?' +
-            'sort=2012.earnings.6_yrs_after_entry.percent_greater_than_25000:desc' +
-            '&' +
-            'fields=id,school.name,school.city,school.state,2014.student.size,school.ownership,school.degrees_awarded.predominant,2014.cost.avg_net_price.overall,2014.completion.rate_suppressed.overall,2012.earnings.10_yrs_after_entry.median,2012.earnings.6_yrs_after_entry.percent_greater_than_25000,school.under_investigation' +
-            '&' +
-            'school.operating=1' +
+            'sort=2012.earnings.6_yrs_after_entry.percent_greater_than_25000%3Adesc&school.operating=1'+
             '&' +
             '2014.student.size__range=0..' +
             '&' +
-            '2014.academics.program_available.assoc_or_bachelors=true' +
+            '2014.academics.program_available.bachelors=true' +
             '&' +
-            'school.degrees_awarded.predominant__range=1..3' +
+            '2014.academics.program.degree.' + major + '__range=1..' +
+            '&' +
+            'school.degrees_awarded.predominant=' + degree +
             '&' +
             'school.degrees_awarded.highest__range=2..4' +
             '&' +
+            'fields=id%2Cschool.name%2Cschool.city%2Cschool.state%2C2014.student.size%2Cschool.ownership%2Cschool.degrees_awarded.predominant%2C2014.cost.avg_net_price.overall%2C2014.completion.rate_suppressed.overall%2C2012.earnings.10_yrs_after_entry.median%2C2012.earnings.6_yrs_after_entry.percent_greater_than_25000%2Cschool.under_investigation' +
+            '&' +
             'api_key=38SEXdMNbMh1eIXMVNkThsu7zRgEPCdJ4eiRWAAU';
-  //calls the callback function and error response and body will get populated
+  
+  // calls the callback function and error response and body will get populated
   request(url, function(error, response, body){
     res.send(body);
   })
