@@ -20,18 +20,18 @@ app.get('/v1/schools/:degree/:major', function(req, res){
             '&' +
             '2014.student.size__range=0..' +
             '&' +
-            '2014.academics.program_available.bachelors=true' +
+            '2014.academics.program_available.' + degree + '=true' +
             '&' +
             '2014.academics.program.degree.' + major + '__range=1..' +
             '&' +
-            'school.degrees_awarded.predominant=' + degree +
+            'school.degrees_awarded.predominant__range=1..3' +
             '&' +
             'school.degrees_awarded.highest__range=2..4' +
             '&' +
             'fields=id%2Cschool.name%2Cschool.city%2Cschool.state%2C2014.student.size%2Cschool.ownership%2Cschool.degrees_awarded.predominant%2C2014.cost.avg_net_price.overall%2C2014.completion.rate_suppressed.overall%2C2012.earnings.10_yrs_after_entry.median%2C2012.earnings.6_yrs_after_entry.percent_greater_than_25000%2Cschool.under_investigation' +
             '&' +
             'api_key=38SEXdMNbMh1eIXMVNkThsu7zRgEPCdJ4eiRWAAU';
-  
+
   // calls the callback function and error response and body will get populated
   request(url, function(error, response, body){
     res.send(body);
